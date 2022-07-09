@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/auth', userRoutes);
-app.use('/api/post', postRoutes);
+app.use('/api/posts', postRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
