@@ -1,0 +1,13 @@
+POST http://localhost:3000/api/post/
+
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmM1ZDEwYTUxYzNkYjllYjhkOGQ1ZjUiLCJpYXQiOjE2NTcxMzEyODksImV4cCI6MTY1NzIxNzY4OX0.4vKAHBQ6H5P57DEGl69QUks0RwIFMFlDX8bNONa2l_k
+
+{
+    "userId": "62c5d10a51c3db9eb8d8d5f5",
+    "title": "Titre test",
+    "text": "Texte test pour voir si la route fonctionne",
+    "imageUrl": " ",
+    "Likes": 0,
+    "usersLiked": [""]
+}

@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const userRoutes = require('./routes/user');
-
+const postRoutes = require('./routes/post');
 
 mongoose.connect(process.env.GPMN_CONNECT,
     {
@@ -28,7 +28,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/auth', userRoutes);
-
+app.use('/api/posts', postRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 module.exports = app;
