@@ -1,0 +1,12 @@
+.gpmn-banner {
+    color: black;
+    border-bottom: solid 3px  #4E5166;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.gpmn-logo {
+    width: 150px;
+    height: 20%;
+}
