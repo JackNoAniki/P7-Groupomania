@@ -1,17 +1,19 @@
 import Banner from './Banner'
-import logo from '../assets/logo-groupomania-orange.png'
-
+import login from '../components/Login'
+import signup from '../components/signup'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import '../styles/App.css';
 
 function App() {
-  return (
-    <div>
-      <Banner>
-          <img src={logo} alt='logo-groupomania' className='gpmn-logo' />
-
-      </Banner>
-    </div>
-  );
+    return (
+    <Router>
+        <Banner />
+        <Switch>
+            <Route exact path="/" component={login} />
+            <Route path="/signup" component={signup} />
+        </Switch>
+    </Router>
+    )
 }
 
 export default App;
