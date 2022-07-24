@@ -9,6 +9,11 @@ function Login() {
         history.push(signup)
     }
 
+    const NavigateToHome = () => {
+        const home = '/home'
+        history.push(home)
+    }
+
     return (
     <div className='loginContainer'>
         <h1 className='pageTitle'>CONNEXION</h1>
@@ -21,6 +26,7 @@ function Login() {
         </form>
         <br />
         <br />
+        <button onClick={NavigateToHome}>Se connecter</button>
         <p>Vous n'avez pas de compte ? <span onClick={NavigateToSignup}>Inscrivez-vous !</span></p>
     </div>
     )

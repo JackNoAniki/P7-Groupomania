@@ -1,9 +1,7 @@
-import { useState } from 'react'
 
 function Publish() {
 
-    const [publish, setPublish] = useState('')
-    
+
     return (
         <div className="publishContainer">
             <h2>Publier un post</h2>
