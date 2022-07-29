@@ -1,22 +1,35 @@
 import Banner from './Banner'
-import Login from './Login'
-import Signup from './Signup'
-import Home from './Home'
-import Publish from './Publish'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Login from '../pages/Login'
+import Signup from '../pages/Signup'
+import Home from '../pages/Home'
+import Publish from '../pages/Publish'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { useState } from 'react'
+import { AdminProvider, DataProvider, TokenProvider } from '../utils/context/UserContext'
 import '../styles/App.css';
 
 function App() {
+
+    const [currentUser, setCurrentUser] = useState("")
+    const [userToken, setUserToken] = useState("")
+    const [isAdmin, setIsAdmin] = useState("")
+
     return (
-    <Router>
-        <Banner />
-        <Switch>
-            <Route exact path="/" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/home" component={Home} />
-            <Route path="/publish" component={Publish} />
-        </Switch>
-    </Router>
+        <DataProvider value={{ currentUser, setCurrentUser }}>
+            <TokenProvider value={{ userToken, setUserToken }}>
+                <AdminProvider value={{isAdmin, setIsAdmin}}>
+                <Banner />
+                    <BrowserRouter>
+                        <Routes>
+                            <Route exact path="/" element={<Signup />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/home" element={<Home />} />
+                            <Route path="/publish" element={<Publish />} />
+                        </Routes>
+                    </BrowserRouter>
+                </AdminProvider>
+            </TokenProvider>
+        </DataProvider>
     )
 }
 
