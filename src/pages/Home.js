@@ -1,5 +1,5 @@
 import '../styles/Home.css'
-import { NavLink, useNavigate, Link } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import colors from '../utils/colors'
 import styled from 'styled-components'
 import { useEffect, useState, useContext } from 'react'
@@ -22,7 +22,7 @@ const StyledLink = styled(NavLink)`
 
 const Home = () => {
 
-    const { currentUser, sertCurrentUser } = useContext(userContext)
+    const { currentUser, setCurrentUser } = useContext(userContext)
     const { userToken, setUserToken } = useContext(userTokenContext)
     const { isAdmin, setIsAdmin } = useContext(userAdminContext)
 
@@ -33,16 +33,23 @@ const Home = () => {
 
     const getData = () => {
         if(!currentUser) {
-            sertCurrentUser(localStorage.userConnected)
+            setCurrentUser(localStorage.userConnected)
             setUserToken(localStorage.userToken)
             setIsAdmin(localStorage.isAdmin)
-            console.log("1", typeof(isAdmin), isAdmin)
         }
 
-        axios.get(`http://localhost:8000/api/posts`)
+        /**fetch(`http://localhost:8000/api/posts`, {
+            method: 'GET',
+            headers: {
+                //'Content-Type': 'application/json',
+                //'Accept': 'appliation/json',
+                'Authorization': `Bearer ${userToken}`
+            }  
+        })*/
+        axios.get('http://localhost:8000/api/posts')
             .then(res => {
                 setData(res.data)
-                console.log("data is :", res.data)
+                console.log(res)
             })
             .catch(error => {
                 console.log(error)
@@ -66,16 +73,11 @@ const Home = () => {
             </nav>
             { isAdmin === true ? <h1>Administrateur connecté</h1> : <h1>Utilisateur connecté</h1> }
             <div className="homeContainer__posts">
-                {data.map((post) =>
-                    <Link
-                        key={"link_key" + post._id}
-                        to={"/post/" + post._id}
-                    >
-                        <Card
-                            key={"card_key" + post._id}
-                            post={post}
-                        />
-                    </Link>
+                {data?.map((post) =>
+                    <Card
+                        key={"card_key" + post._id}
+                        post={post}
+                    />
                 )}
             </div>
         </div>
