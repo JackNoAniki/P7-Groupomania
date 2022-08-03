@@ -30,13 +30,13 @@ const Login = () => {
             password: e.target.password.value
         })
             .then((res) => {
-                setCurrentUser(`${res.data.userId}`)
-                setUserToken(`${res.data.token}`)
-                setIsAdmin(`${res.data.isAdmin}`)
+                setCurrentUser(res.data.userId)
+                setUserToken('Bearer '.concat(res.data.token))
+                setIsAdmin(res.data.isAdmin)
 
-                localStorage.setItem("userConnected", `${res.data.userId}`)
-                localStorage.setItem("userToken", `${res.data.token}`)
-                localStorage.setItem("isAdmin", res.data.isAdmin)
+                localStorage.setItem("userConnected", JSON.stringify(res.data.userId))
+                localStorage.setItem("userToken", "Bearer ".concat(res.data.token))
+                localStorage.setItem("isAdmin", JSON.stringify(res.data.isAdmin))
                 navigate("/home")
             })
             .catch(error => {

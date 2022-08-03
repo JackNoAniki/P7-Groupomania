@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import axios from 'axios'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { FaEyeSlash, FaEye } from 'react-icons/fa'
+import axios from 'axios'
 import '../styles/Signup.css'
 
 
@@ -24,7 +24,7 @@ function Signup () {
             setMailUsed(!mailUsed)
         }
         e.preventDefault();
-        axios.post(`http://localhost:8000/api/auth/signup`, {
+        axios.post(`http://localhost:8000/api/auth/signup`, {   
             email: e.target.email.value,
             password: e.target.password.value
         })

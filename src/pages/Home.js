@@ -26,7 +26,9 @@ const Home = () => {
     const { userToken, setUserToken } = useContext(userTokenContext)
     const { isAdmin, setIsAdmin } = useContext(userAdminContext)
 
-    axios.defaults.headers.common['Authorization'] = userToken
+    axios.defaults.headers.common['Authorization'] = JSON.stringify(userToken)
+
+    console.log(userToken)
 
     const [data, setData] = useState([])
     const navigate = useNavigate()
@@ -38,15 +40,11 @@ const Home = () => {
             setIsAdmin(localStorage.isAdmin)
         }
 
-        /**fetch(`http://localhost:8000/api/posts`, {
-            method: 'GET',
+        axios.get('http://localhost:8000/api/posts', {
             headers: {
-                //'Content-Type': 'application/json',
-                //'Accept': 'appliation/json',
-                'Authorization': `Bearer ${userToken}`
-            }  
-        })*/
-        axios.get('http://localhost:8000/api/posts')
+                Authorization: userToken
+            }
+        })
             .then(res => {
                 setData(res.data)
                 console.log(res)
