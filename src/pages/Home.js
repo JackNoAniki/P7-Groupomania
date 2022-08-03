@@ -28,7 +28,7 @@ const Home = () => {
 
     axios.defaults.headers.common['Authorization'] = JSON.stringify(userToken)
 
-    console.log(userToken)
+
 
     const [data, setData] = useState([])
     const navigate = useNavigate()
