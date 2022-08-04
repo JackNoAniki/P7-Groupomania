@@ -8,9 +8,9 @@ import { FaEyeSlash, FaEye } from 'react-icons/fa'
 
 const Login = () => {
 
-    const { setCurrentUser } = useContext(userContext)
-    const {  setUserToken } = useContext(userTokenContext)
-    const {  setIsAdmin } = useContext(userAdminContext)
+    const { currentUser, setCurrentUser } = useContext(userContext)
+    const {  userToken, setUserToken } = useContext(userTokenContext)
+    const {  isAdmin, setIsAdmin } = useContext(userAdminContext)
     const navigate = useNavigate()
 
     const [passwordShown, setPasswordShown] = useState(false)
@@ -34,9 +34,9 @@ const Login = () => {
                 setUserToken('Bearer '.concat(res.data.token))
                 setIsAdmin(res.data.isAdmin)
 
-                localStorage.setItem("userConnected", JSON.stringify(res.data.userId))
-                localStorage.setItem("userToken", "Bearer ".concat(res.data.token))
-                localStorage.setItem("isAdmin", JSON.stringify(res.data.isAdmin))
+                localStorage.setItem("userConnected", currentUser)
+                localStorage.setItem("userToken", (userToken))
+                localStorage.setItem("isAdmin", isAdmin)
                 navigate("/home")
             })
             .catch(error => {

@@ -26,10 +26,6 @@ const Home = () => {
     const { userToken, setUserToken } = useContext(userTokenContext)
     const { isAdmin, setIsAdmin } = useContext(userAdminContext)
 
-    axios.defaults.headers.common['Authorization'] = JSON.stringify(userToken)
-
-
-
     const [data, setData] = useState([])
     const navigate = useNavigate()
 

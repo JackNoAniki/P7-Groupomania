@@ -7,34 +7,37 @@ import withReactContent from 'sweetalert2-react-content'
 
 
 const Publish = () => {
-    const [userId, setUserId] = useState()
-    const [imgPostFile, setPostImgFile] = useState()
-    const [imgPostInput, setPostImgInput] = useState()
+    const [imgPostFile, setImgPostFile] = useState()
     const { currentUser } = useContext(userContext)
     const { userToken } = useContext(userTokenContext)
 
     const mySwal = withReactContent(Swal)
     const navigate = useNavigate()
     
-    axios.defaults.headers.common['Authorization'] = userToken
 
     const handlePostImg = (e) => {
         e.preventDefault()
-        setPostImgInput(e.target.value)
-        setPostImgFile(e.target.files[0])
+        setImgPostFile(e.target.files[0])
     }
 
     const handlePostSubmit = (e) => {
         e.preventDefault()
         const today = Date.now()
-        const formData = new FormData()
-        formData.append("title", e.target.title.value)
-        formData.append("body", e.target.body.value)
-        formData.append("imagePost", imgPostFile)
-        formData.append("date", today)
-        formData.append("userId", userId)
-
-        axios.post(`http://localhost:8000/api/posts`, formData)
+        const formData = {
+            title: e.target.title.value,
+            body: e.target.body.value,
+            imagePost: imgPostFile,
+            date: today,
+            userId: currentUser
+        }
+        console.log(currentUser)
+        console.log(userToken)
+        console.log(formData)
+        axios.post(`http://localhost:8000/api/posts`, formData, {
+            headers: {
+                Authorization: userToken
+            }
+        })
             .then(() => {
                 mySwal.fire({
                     title: 'Votre post a bien été publié !'
@@ -48,10 +51,7 @@ const Publish = () => {
         if(!localStorage.getItem("userConnected")) {
             navigate("/login")
         }
-        if (currentUser) {
-            setUserId(localStorage.getItem("userConnected"))
-        }
-    }, [currentUser, navigate])
+    }, [navigate])
 
     
 
@@ -70,7 +70,7 @@ const Publish = () => {
                 </label>
                 <label htmlFor='image'>
                     Ajouter une image
-                    <input type="file" name="imagePost" id="imagePost" accept='image/png, image/jpeg, image/jpg' value={imgPostInput} onChange={handlePostImg} />
+                    <input type="file" name="imagePost" id="imagePost" accept='image/png, image/jpeg, image/jpg' onChange={handlePostImg} />
                 </label>
                 <input className="form__publish--button" type="submit" value="Publier" />
             </form>
