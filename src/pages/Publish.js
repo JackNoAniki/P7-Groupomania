@@ -13,7 +13,6 @@ const Publish = () => {
 
     const mySwal = withReactContent(Swal)
     const navigate = useNavigate()
-    
 
     const handlePostImg = (e) => {
         e.preventDefault()
@@ -24,17 +23,19 @@ const Publish = () => {
         e.preventDefault()
         const today = Date.now()
         const formData = {
-            title: e.target.title.value,
-            body: e.target.body.value,
-            imagePost: imgPostFile,
-            date: today,
-            userId: currentUser
-        }
+                title: e.target.title.value,
+                body: e.target.body.value,
+                image: imgPostFile,
+                date: today,
+                userId: currentUser
+            }
+        
         console.log(currentUser)
         console.log(userToken)
         console.log(formData)
         axios.post(`http://localhost:8000/api/posts`, formData, {
             headers: {
+                'Content-Type': 'application/json',
                 Authorization: userToken
             }
         })

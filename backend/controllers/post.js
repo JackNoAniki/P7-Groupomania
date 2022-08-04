@@ -22,7 +22,7 @@ exports.createPost = (req, res) => {
     });
     post.save()
         .then(() => res.status(201).json({ message: 'Post saved !' }))
-        .catch(error => res.status(400).json({ error }))
+        .catch(error => res.status(400).json({ error }));
 };
 
 exports.modifyPost = (req, res) => {
