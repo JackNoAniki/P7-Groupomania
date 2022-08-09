@@ -35,7 +35,7 @@ const Login = () => {
                 setIsAdmin(res.data.isAdmin)
 
                 localStorage.setItem("userConnected", currentUser)
-                localStorage.setItem("userToken", (userToken))
+                localStorage.setItem("userToken", userToken)
                 localStorage.setItem("isAdmin", isAdmin)
                 navigate("/home")
             })

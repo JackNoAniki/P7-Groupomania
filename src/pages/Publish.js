@@ -1,9 +1,9 @@
-import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { userContext, userTokenContext } from '../utils/context/UserContext'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import axios from 'axios'
 
 
 const Publish = () => {
@@ -14,6 +14,7 @@ const Publish = () => {
     const mySwal = withReactContent(Swal)
     const navigate = useNavigate()
 
+
     const handlePostImg = (e) => {
         e.preventDefault()
         setImgPostFile(e.target.files[0])
@@ -22,23 +23,30 @@ const Publish = () => {
     const handlePostSubmit = (e) => {
         e.preventDefault()
         const today = Date.now()
-        const formData = {
+
+        //const FormData = require('form-data')
+
+        /**const formData = new FormData()
+        formData.append("title", e.target.title.value)
+        formData.append("body", e.target.body.value)
+        formData.append("image", imgPostFile, 'piment-espelette.png')
+        formData.append("date", today)
+        formData.append("userId", currentUser)*/
+
+        const form = {
                 title: e.target.title.value,
                 body: e.target.body.value,
                 image: imgPostFile,
                 date: today,
                 userId: currentUser
             }
-        
-        console.log(currentUser)
-        console.log(userToken)
-        console.log(formData)
-        axios.post(`http://localhost:8000/api/posts`, formData, {
+        axios.post(`http://localhost:8000/api/posts`, form, {
             headers: {
-                'Content-Type': 'application/json',
-                Authorization: userToken
-            }
+                Authorization: userToken,
+                'Content-Type': 'multipart/form-data'
+            },
         })
+            .then(res => res.json())
             .then(() => {
                 mySwal.fire({
                     title: 'Votre post a bien été publié !'
@@ -49,10 +57,10 @@ const Publish = () => {
     }
 
     useEffect(() => {
-        if(!localStorage.getItem("userConnected")) {
+        if(!currentUser) {
             navigate("/login")
         }
-    }, [navigate])
+    }, [currentUser,navigate])
 
     
 
@@ -60,7 +68,7 @@ const Publish = () => {
     return (
         <div className="publishContainer">
             <h2>Publier un post</h2>
-            <form className='form__publish' onSubmit={(e) => handlePostSubmit(e)} encType="multipart/form-data">
+            <form method="post" className='form__publish' onSubmit={(e) => handlePostSubmit(e)} encType="multipart/form-data">
                 <label htmlFor='title'>
                     Titre de la publication
                     <input type="text" name="title" placeholder="Votre post" required />
