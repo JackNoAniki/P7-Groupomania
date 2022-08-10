@@ -19,7 +19,7 @@ const Card = ({ post }) => {
                     <h2>{post.title}</h2>
                     <p>{post.body}</p>
                 </section>
-                <img src={post.imageUrl} alt='' />
+                <img src={post.image} alt='' />
             </article>
             <aside className='card__aside'>
                 <div className='card__aside--likes'>

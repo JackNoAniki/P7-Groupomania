@@ -12,11 +12,11 @@ exports.getAllPosts = (req, res, next) => {
 };
 
 exports.createPost = (req, res) => {
-    const postObject = JSON.parse(req.body.post);
+    const postObject = req.body
     delete postObject._id;
     const post = new Post ({
         ...postObject,
-        imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         likes: 0,
         usersLiked: [' ']
     });

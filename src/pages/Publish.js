@@ -4,15 +4,17 @@ import { userContext, userTokenContext } from '../utils/context/UserContext'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import axios from 'axios'
+//import FormData from 'form-data'
 
 
 const Publish = () => {
     const [imgPostFile, setImgPostFile] = useState()
     const { currentUser } = useContext(userContext)
     const { userToken } = useContext(userTokenContext)
+    axios.defaults.headers.common['Authorization'] = userToken
 
     const mySwal = withReactContent(Swal)
-    const navigate = useNavigate()
+    const navigate = useNavigate()  
 
 
     const handlePostImg = (e) => {
@@ -24,29 +26,21 @@ const Publish = () => {
         e.preventDefault()
         const today = Date.now()
 
-        //const FormData = require('form-data')
-
-        /**const formData = new FormData()
+        const formData = new FormData()
         formData.append("title", e.target.title.value)
-        formData.append("body", e.target.body.value)
-        formData.append("image", imgPostFile, 'piment-espelette.png')
+        formData.append("text", e.target.body.value)
+        formData.append("imagePost", imgPostFile)
         formData.append("date", today)
-        formData.append("userId", currentUser)*/
-
-        const form = {
+        formData.append("userId", currentUser)
+        console.log(imgPostFile)
+        /*const form = {
                 title: e.target.title.value,
-                body: e.target.body.value,
-                image: imgPostFile,
+                text: e.target.body.value,
+                imageUrl: imgPostFile,
                 date: today,
                 userId: currentUser
-            }
-        axios.post(`http://localhost:8000/api/posts`, form, {
-            headers: {
-                Authorization: userToken,
-                'Content-Type': 'multipart/form-data'
-            },
-        })
-            .then(res => res.json())
+            }*/
+        axios.post(`http://localhost:8000/api/posts`, formData) 
             .then(() => {
                 mySwal.fire({
                     title: 'Votre post a bien été publié !'
@@ -68,7 +62,7 @@ const Publish = () => {
     return (
         <div className="publishContainer">
             <h2>Publier un post</h2>
-            <form method="post" className='form__publish' onSubmit={(e) => handlePostSubmit(e)} encType="multipart/form-data">
+            <form method="post" className='form__publish' onSubmit={(e) => handlePostSubmit(e)}>
                 <label htmlFor='title'>
                     Titre de la publication
                     <input type="text" name="title" placeholder="Votre post" required />

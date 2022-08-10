@@ -25,6 +25,7 @@ const Home = () => {
     const { currentUser, setCurrentUser } = useContext(userContext)
     const { userToken, setUserToken } = useContext(userTokenContext)
     const { isAdmin, setIsAdmin } = useContext(userAdminContext)
+    axios.defaults.headers.common['Authorization'] = userToken
 
     const [data, setData] = useState([])
     const navigate = useNavigate()
@@ -36,11 +37,7 @@ const Home = () => {
             setIsAdmin(localStorage.isAdmin)
         }
 
-        axios.get('http://localhost:8000/api/posts', {
-            headers: {
-                Authorization: userToken
-            }
-        })
+        axios.get('http://localhost:8000/api/posts')
             .then(res => {
                 setData(res.data)
                 console.log(res)
@@ -55,7 +52,7 @@ const Home = () => {
             navigate("/login")
         }
         getData()
-    })
+    }, [])
 
     return (
         <div className="homeContainer">
