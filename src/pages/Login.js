@@ -1,6 +1,6 @@
 import '../styles/login.css'
 import { useNavigate, NavLink} from 'react-router-dom'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import axios from 'axios'
 import { userAdminContext, userContext, userTokenContext } from '../utils/context/UserContext'
 import { FaEyeSlash, FaEye } from 'react-icons/fa'
@@ -30,13 +30,13 @@ const Login = () => {
             password: e.target.password.value
         })
             .then((res) => {
-                setCurrentUser(res.data.userId)
-                setUserToken('Bearer '.concat(res.data.token))
-                setIsAdmin(res.data.isAdmin)
+                setCurrentUser(`${res.data.userId}`)
+                setUserToken('Bearer '.concat(`${res.data.token}`))
+                setIsAdmin(`${res.data.isAdmin}`)
 
-                localStorage.setItem("userConnected", currentUser)
-                localStorage.setItem("userToken", userToken)
-                localStorage.setItem("isAdmin", isAdmin)
+                localStorage.setItem("userConnected", `${res.data.userId}`)
+                localStorage.setItem("userToken", 'Bearer '.concat(`${res.data.token}`))
+                localStorage.setItem("isAdmin", `${res.data.isAdmin}`)
                 navigate("/home")
             })
             .catch(error => {
@@ -44,6 +44,10 @@ const Login = () => {
                 setCredError(true)
             })
     }
+
+    useEffect(() => {
+
+    }, [])
 
     return (
     <div className='loginContainer'>

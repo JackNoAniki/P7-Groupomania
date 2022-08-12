@@ -17,9 +17,9 @@ const Card = ({ post }) => {
             <article className='card__article'>
                 <section className='card__article__text'>
                     <h2>{post.title}</h2>
-                    <p>{post.body}</p>
+                    <p>{post.text}</p>
                 </section>
-                <img src={post.image} alt='' />
+                <img src={post.imageUrl} alt='' />
             </article>
             <aside className='card__aside'>
                 <div className='card__aside--likes'>

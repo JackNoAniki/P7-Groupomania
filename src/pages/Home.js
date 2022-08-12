@@ -40,7 +40,6 @@ const Home = () => {
         axios.get('http://localhost:8000/api/posts')
             .then(res => {
                 setData(res.data)
-                console.log(res)
             })
             .catch(error => {
                 console.log(error)
@@ -52,13 +51,13 @@ const Home = () => {
             navigate("/login")
         }
         getData()
-    }, [])
+    }, [currentUser])
 
     return (
         <div className="homeContainer">
             <nav className="navContainer">
                 <StyledLink to="#">Tous les posts</StyledLink>
-                <StyledLink to="#">Mes posts</StyledLink>
+                <StyledLink to="/myposts">Mes posts</StyledLink>
                 <StyledLink to="/publish">Publier</StyledLink>
                 <StyledLink to="#">Déconnexion</StyledLink>
             </nav>

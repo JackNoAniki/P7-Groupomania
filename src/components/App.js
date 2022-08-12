@@ -3,6 +3,7 @@ import Login from '../pages/Login'
 import Signup from '../pages/Signup'
 import Home from '../pages/Home'
 import Publish from '../pages/Publish'
+import MyPosts from '../pages/MyPosts'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useState } from 'react'
 import { AdminProvider, DataProvider, TokenProvider } from '../utils/context/UserContext'
@@ -12,7 +13,7 @@ function App() {
 
     const [currentUser, setCurrentUser] = useState("")
     const [userToken, setUserToken] = useState("")
-    const [isAdmin, setIsAdmin] = useState("")
+    const [isAdmin, setIsAdmin] = useState(false)
 
     return (
         <DataProvider value={{ currentUser, setCurrentUser }}>
@@ -25,6 +26,7 @@ function App() {
                             <Route path="/login" element={<Login />} />
                             <Route path="/home" element={<Home />} />
                             <Route path="/publish" element={<Publish />} />
+                            <Route path="/myposts" element={<MyPosts />} />
                         </Routes>
                     </BrowserRouter>
                 </AdminProvider>

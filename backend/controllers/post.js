@@ -1,6 +1,7 @@
 const Post = require('../models/post');
 const fs = require('fs');
 
+
 exports.getAllPosts = (req, res, next) => {
     Post.find()
         .then((posts) => {
@@ -11,12 +12,18 @@ exports.getAllPosts = (req, res, next) => {
         });
 };
 
-exports.createPost = (req, res) => {
+exports.getMyPosts = (req, res, next) => {
+    Post.find({ userId: req.auth.userId }).sort(({ date: 'descending' }))
+        .then(posts => res.status(200).json(posts))
+        .catch(() => res.status(400).json({ error: "User no found or unindentified" }));
+}
+
+exports.createPost = (req, res, next) => {
     const postObject = req.body
     delete postObject._id;
     const post = new Post ({
         ...postObject,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        imageUrl: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : "",
         likes: 0,
         usersLiked: [' ']
     });
