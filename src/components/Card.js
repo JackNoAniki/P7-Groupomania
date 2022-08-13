@@ -1,6 +1,10 @@
+import { useContext } from 'react'
 import { FaRegThumbsUp } from 'react-icons/fa'
+import { userContext } from '../utils/context/UserContext'
 
 const Card = ({ post }) => {
+    const { currentUser } = useContext(userContext)
+
     const dateFormater = (date) => {
         const newDate = new Date(date).toLocaleDateString("fr-FR", {
             year: "numeric",
@@ -26,6 +30,13 @@ const Card = ({ post }) => {
                     <span><FaRegThumbsUp /> {" " + post.likes}</span>
                 </div>
                 <p>Posté le {dateFormater(post.date)} </p>
+                {post.userId === currentUser ?
+                <div className='userIdButtons'>
+                    <button className='modifyButton'>Modifier</button>
+                    <button className='deleteButton'>Supprimer</button>
+                </div>
+                :
+                ""}
             </aside>
         </div>
     )
