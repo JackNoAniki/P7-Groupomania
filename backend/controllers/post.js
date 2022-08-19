@@ -32,7 +32,7 @@ exports.createPost = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.modifyPost = (req, res) => {
+exports.modifyPost = (req, res, next) => {
     const postObject = req.file ?
     {
         ...JSON.parse(req.body.post),
@@ -56,11 +56,11 @@ exports.deletePost = (req, res) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-exports.likePost = (req, res) => {
+exports.likePost = (req, res, next) => {
     switch (req.body.like) {
         case 1 :
             Post.updateOne({ _id: req.params.id },
-            { $inc: { likes: +1 }, $push: { usersLiked: req.body.userId }})
+            { $inc: { likes: +1 }, $push: { usersLiked: req.auth.userId }})
                 .then(() => res.status(200).json({ message: "I like" }))
                 .catch(error => res.status(400).json({ error }));
             break;
@@ -68,9 +68,9 @@ exports.likePost = (req, res) => {
         case 0 : 
             Post.findOne({ _id: req.params.id })
                 .then((post) => {
-                    if (post.usersLiked.includes(req.body.userId)) {
+                    if (post.usersLiked.includes(req.auth.userId)) {
                         Post.updateOne({ _id: req.params.id }, 
-                        { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId }})
+                        { $inc: { likes: -1 }, $pull: { usersLiked: req.auth.userId }})
                             .then(() => res.status(200).json({ message: "Neutral" }))
                             .catch(error => res.status(400).json({ error }));
                     };

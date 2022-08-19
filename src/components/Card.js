@@ -1,9 +1,12 @@
-import { useContext } from 'react'
+import axios from 'axios'
+import { useContext, useState } from 'react'
 import { FaRegThumbsUp } from 'react-icons/fa'
-import { userContext } from '../utils/context/UserContext'
+import { userContext, userTokenContext } from '../utils/context/UserContext'
 
 const Card = ({ post }) => {
     const { currentUser } = useContext(userContext)
+    const { userToken } = useContext(userTokenContext)
+    axios.defaults.headers.common['Authorization'] = userToken
 
     const dateFormater = (date) => {
         const newDate = new Date(date).toLocaleDateString("fr-FR", {
@@ -15,7 +18,33 @@ const Card = ({ post }) => {
         })
         return newDate
     }
-    
+
+    const like = post.usersLiked
+    const [userLike, setUserLike] = useState(like.includes(currentUser))
+    const [liked, setLiked] = useState(0)
+
+    const handleLike = () => {
+
+        setUserLike(!userLike)
+        let likeData
+        (userLike ? 
+            likeData = {
+                like: 0
+            }
+        :
+            likeData = {
+                like: 1
+            }
+        )
+
+            axios.post(`http://localhost:8000/api/posts/${post._id}/like`, likeData)
+            .then((res) => {
+            console.log(res)
+            (userLike ? setLiked(0) : setLiked(1))
+            })
+            .catch(error => console.log(error))
+    }
+
     return (
         <div className='card'>
             <article className='card__article'>
@@ -27,7 +56,7 @@ const Card = ({ post }) => {
             </article>
             <aside className='card__aside'>
                 <div className='card__aside--likes'>
-                    <span><FaRegThumbsUp /> {" " + post.likes}</span>
+                    <span onClick={handleLike}><FaRegThumbsUp />{" " + liked}</span>
                 </div>
                 <p>Posté le {dateFormater(post.date)} </p>
                 {post.userId === currentUser ?

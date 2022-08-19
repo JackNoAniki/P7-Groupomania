@@ -43,13 +43,7 @@ const Publish = () => {
         form.append("date", today)
         form.append("userId", currentUser)
         console.log(imgPostFile)
-        /*const form = {
-                title: e.target.title.value,
-                text: e.target.body.value,
-                imageUrl: imgPostFile,
-                date: today,
-                userId: currentUser
-            }*/
+
         axios.post(`http://localhost:8000/api/posts`, form) 
             .then((res) => {
                 mySwal.fire({

@@ -63,7 +63,7 @@ const Home = () => {
             </nav>
             { isAdmin === true ? <h1>Administrateur connecté</h1> : <h1>Utilisateur connecté</h1> }
             <div className="homeContainer__posts">
-                {data?.map((post) =>
+                {data.map((post) =>
                     <Card
                         key={"card_key" + post._id}
                         post={post}
