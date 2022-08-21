@@ -4,6 +4,7 @@ import Signup from '../pages/Signup'
 import Home from '../pages/Home'
 import Publish from '../pages/Publish'
 import MyPosts from '../pages/MyPosts'
+import ModifyPost from '../pages/ModifyPost'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useState } from 'react'
 import { AdminProvider, DataProvider, TokenProvider } from '../utils/context/UserContext'
@@ -27,6 +28,8 @@ function App() {
                             <Route path="/home" element={<Home />} />
                             <Route path="/publish" element={<Publish />} />
                             <Route path="/myposts" element={<MyPosts />} />
+                            <Route path="/modifypost/:id" element={<ModifyPost />} />
+                            
                         </Routes>
                     </BrowserRouter>
                 </AdminProvider>

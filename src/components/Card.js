@@ -2,11 +2,18 @@ import axios from 'axios'
 import { useContext, useState } from 'react'
 import { FaRegThumbsUp } from 'react-icons/fa'
 import { userContext, userTokenContext } from '../utils/context/UserContext'
+import { useNavigate } from 'react-router-dom'
 
 const Card = ({ post }) => {
     const { currentUser } = useContext(userContext)
     const { userToken } = useContext(userTokenContext)
     axios.defaults.headers.common['Authorization'] = userToken
+
+    const navigate = useNavigate()
+    const navToMofidyPost = () => {
+        let modifyPost = "/modifypost/" + post._id
+        navigate(modifyPost)
+    }
 
     const dateFormater = (date) => {
         const newDate = new Date(date).toLocaleDateString("fr-FR", {
@@ -61,7 +68,7 @@ const Card = ({ post }) => {
                 <p>Posté le {dateFormater(post.date)} </p>
                 {post.userId === currentUser ?
                 <div className='userIdButtons'>
-                    <button className='modifyButton'>Modifier</button>
+                    <button className='modifyButton' onClick={navToMofidyPost}>Modifier</button>
                     <button className='deleteButton'>Supprimer</button>
                 </div>
                 :

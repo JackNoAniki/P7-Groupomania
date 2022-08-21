@@ -23,13 +23,6 @@ const Publish = () => {
         setImgPostFile(e.target.files[0])
         const imgUrl = URL.createObjectURL(e.target.files[0])
         setImgPreview(imgUrl)
-
-        //const reader = new FileReader()
-        //reader.onload = () => {
-        //} 
-        //reader.readAsDataURL(e.target.files[0])
-        
-        
     }
 
     const handlePostSubmit = (e) => {
@@ -42,10 +35,9 @@ const Publish = () => {
         form.append("imagePost", imgPostFile, imgPostFile.name)
         form.append("date", today)
         form.append("userId", currentUser)
-        console.log(imgPostFile)
 
         axios.post(`http://localhost:8000/api/posts`, form) 
-            .then((res) => {
+            .then(() => {
                 mySwal.fire({
                     title: 'Votre post a bien été publié !'
                 })
