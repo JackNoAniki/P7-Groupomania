@@ -1,8 +1,10 @@
 import axios from 'axios'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { FaRegThumbsUp } from 'react-icons/fa'
 import { userContext, userTokenContext } from '../utils/context/UserContext'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const Card = ({ post }) => {
     const { currentUser } = useContext(userContext)
@@ -14,6 +16,8 @@ const Card = ({ post }) => {
         let modifyPost = "/modifypost/" + post._id
         navigate(modifyPost)
     }
+
+    const mySwal = withReactContent(Swal)
 
     const dateFormater = (date) => {
         const newDate = new Date(date).toLocaleDateString("fr-FR", {
@@ -52,6 +56,33 @@ const Card = ({ post }) => {
             .catch(error => console.log(error))
     }
 
+    const handleDelete = () => {
+        mySwal.fire({
+            title: "Voulez-vous vraiment supprimer votre post ?",
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: "Supprimer",
+            denyButtonText: "Ne pas supprimer",
+        })
+            .then((result) => {
+                result.isConfirmed ?
+                    axios.delete(`http://localhost:8000/api/posts/` + post._id)
+                        .then(() => {
+                            mySwal.fire("Publication supprimée")
+                            navigate("/home")
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                :
+                    mySwal.fire("Publication non supprimée")
+            })
+    }
+
+    useEffect(() => {
+
+    }, [])
+
     return (
         <div className='card'>
             <article className='card__article'>
@@ -69,7 +100,7 @@ const Card = ({ post }) => {
                 {post.userId === currentUser ?
                 <div className='userIdButtons'>
                     <button className='modifyButton' onClick={navToMofidyPost}>Modifier</button>
-                    <button className='deleteButton'>Supprimer</button>
+                    <button className='deleteButton' onClick={handleDelete} >Supprimer</button>
                 </div>
                 :
                 ""}

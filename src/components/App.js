@@ -29,7 +29,6 @@ function App() {
                             <Route path="/publish" element={<Publish />} />
                             <Route path="/myposts" element={<MyPosts />} />
                             <Route path="/modifypost/:id" element={<ModifyPost />} />
-                            
                         </Routes>
                     </BrowserRouter>
                 </AdminProvider>
