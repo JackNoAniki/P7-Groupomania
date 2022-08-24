@@ -84,7 +84,8 @@ const ModifyPost = () => {
                 </label>
                 <input className="form__publish--button" type="submit" value="Publier" />
             </form>
-            <img src={imgPreview} alt='' />
+            {/*<img src={imgPreview} alt='' />*/}
+            {imgPreview ? <img src={imgPreview} alt='' /> : <img src={post.imageUrl} alt='' />}
             <button className="cancel" onClick={() => navigate("/home")} >Annuler</button>
         </div>
     )
