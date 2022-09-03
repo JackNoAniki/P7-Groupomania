@@ -8,9 +8,9 @@ import { FaEyeSlash, FaEye } from 'react-icons/fa'
 
 const Login = () => {
 
-    const { currentUser, setCurrentUser } = useContext(userContext)
-    const {  userToken, setUserToken } = useContext(userTokenContext)
-    const {  isAdmin, setIsAdmin } = useContext(userAdminContext)
+    const { setCurrentUser } = useContext(userContext)
+    const { setUserToken } = useContext(userTokenContext)
+    const { setIsAdmin } = useContext(userAdminContext)
     const navigate = useNavigate()
 
     const [passwordShown, setPasswordShown] = useState(false)
@@ -48,7 +48,7 @@ const Login = () => {
     useEffect(() => {
 
     }, [])
-
+    
     return (
     <div className='loginContainer'>
         <h1 className='pageTitle'>CONNEXION</h1>

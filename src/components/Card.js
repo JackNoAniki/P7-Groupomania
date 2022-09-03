@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useContext, useState, useEffect } from 'react'
 import { FaRegThumbsUp } from 'react-icons/fa'
-import { userContext, userTokenContext } from '../utils/context/UserContext'
+import { userContext, userTokenContext, userAdminContext } from '../utils/context/UserContext'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -10,6 +10,7 @@ const Card = ({ post }) => {
     const { currentUser } = useContext(userContext)
     const { userToken } = useContext(userTokenContext)
     axios.defaults.headers.common['Authorization'] = userToken
+    const { isAdmin } = useContext(userAdminContext)
 
     const navigate = useNavigate()
     const navToMofidyPost = () => {
@@ -97,7 +98,7 @@ const Card = ({ post }) => {
                     <span onClick={handleLike}><FaRegThumbsUp />{" " + liked}</span>
                 </div>
                 <p>Posté le {dateFormater(post.date)} </p>
-                {post.userId === currentUser ?
+                {post.userId === currentUser  || isAdmin === 'true' ?
                 <div className='userIdButtons'>
                     <button className='modifyButton' onClick={navToMofidyPost}>Modifier</button>
                     <button className='deleteButton' onClick={handleDelete} >Supprimer</button>

@@ -51,6 +51,7 @@ const Home = () => {
             navigate("/login")
         }
         getData()
+        console.log(isAdmin)
     }, [currentUser])
 
     return (
@@ -61,7 +62,7 @@ const Home = () => {
                 <StyledLink to="/publish">Publier</StyledLink>
                 <StyledLink to="#">Déconnexion</StyledLink>
             </nav>
-            { isAdmin === true ? <h1>Administrateur connecté</h1> : <h1>Utilisateur connecté</h1> }
+            { isAdmin === 'true' ? <h1>Administrateur connecté</h1> : <h1>Utilisateur connecté</h1> }
             <div className="homeContainer__posts">
                 {data.map((post) =>
                     <Card

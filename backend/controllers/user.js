@@ -7,7 +7,8 @@ exports.signup = (req, res, next) => {
         .then(hash => {
             const user = new User ({
                 email: req.body.email,
-                password: hash
+                password: hash,
+                isAdmin: false
             });
             user.save()
                 .then(() => res.status(201).json({ message: 'User successfully created !' }))
@@ -33,7 +34,8 @@ exports.login = (req, res, next) => {
                             { userId: user._id },
                             'RANDOM_TOKEN_SECRET',
                             { expiresIn: '24h' }
-                        )
+                        ),
+                        isAdmin: user.isAdmin
                     });
                 })
                 .catch(error => res.status(403).json({ error }));
