@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-const Card = ({ post }) => {
+const Card = ({ post, refresh }) => {
     const { currentUser } = useContext(userContext)
     const { userToken } = useContext(userTokenContext)
     axios.defaults.headers.common['Authorization'] = userToken
@@ -33,7 +33,7 @@ const Card = ({ post }) => {
 
     const like = post.usersLiked
     const [userLike, setUserLike] = useState(like.includes(currentUser))
-    const [liked, setLiked] = useState(0)
+    const [liked, setLiked] = useState(post.likes)
 
     const handleLike = () => {
 
@@ -52,7 +52,7 @@ const Card = ({ post }) => {
             axios.post(`http://localhost:8000/api/posts/${post._id}/like`, likeData)
             .then((res) => {
             console.log(res)
-            (userLike ? setLiked(0) : setLiked(1))
+            (userLike ? setLiked(post.likes) : setLiked(post.likes +1))
             })
             .catch(error => console.log(error))
     }
@@ -70,7 +70,8 @@ const Card = ({ post }) => {
                     axios.delete(`http://localhost:8000/api/posts/` + post._id)
                         .then(() => {
                             mySwal.fire("Publication supprimée")
-                            navigate("/home")
+                            refresh()
+                            //navigate("/home")
                         })
                         .catch(error => {
                             console.log(error)

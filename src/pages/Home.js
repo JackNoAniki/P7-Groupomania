@@ -68,6 +68,7 @@ const Home = () => {
                     <Card
                         key={"card_key" + post._id}
                         post={post}
+                        refresh={getData}
                     />
                 )}
             </div>
