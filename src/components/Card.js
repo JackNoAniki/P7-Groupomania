@@ -71,7 +71,6 @@ const Card = ({ post, refresh }) => {
                         .then(() => {
                             mySwal.fire("Publication supprimée")
                             refresh()
-                            //navigate("/home")
                         })
                         .catch(error => {
                             console.log(error)

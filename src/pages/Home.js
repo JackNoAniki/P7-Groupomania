@@ -46,6 +46,11 @@ const Home = () => {
             })
     }
 
+    const handleDisconnect = () => {
+        localStorage.clear()
+        console.log("local storage cleared !")
+    }
+
     useEffect(() => {
         if(!localStorage.userConnected) {
             navigate("/login")
@@ -60,7 +65,7 @@ const Home = () => {
                 <StyledLink to="#">Tous les posts</StyledLink>
                 <StyledLink to="/myposts">Mes posts</StyledLink>
                 <StyledLink to="/publish">Publier</StyledLink>
-                <StyledLink to="#">Déconnexion</StyledLink>
+                <StyledLink to="/login" onClick={handleDisconnect}>Déconnexion</StyledLink>
             </nav>
             { isAdmin === 'true' ? <h1>Administrateur connecté</h1> : <h1>Utilisateur connecté</h1> }
             <div className="homeContainer__posts">
