@@ -1,9 +1,59 @@
-import '../styles/login.css'
 import { useNavigate, NavLink} from 'react-router-dom'
 import { useContext, useState, useEffect } from 'react'
+import styled from 'styled-components'
 import axios from 'axios'
 import { userAdminContext, userContext, userTokenContext } from '../utils/context/UserContext'
-import { FaEyeSlash, FaEye } from 'react-icons/fa'
+import colors from '../utils/colors'
+
+
+const LoginContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+    max-width: 600px;
+    margin: auto;
+    margin-top: 10px;
+    background: ${colors.secondary};
+    color: ${colors.tertiary};
+    border: 3px solid ${colors.primary};
+    border-radius: 30px;
+
+`
+
+const Title = styled.h1`
+    text-align: center;
+    margin-top: 20px;
+`
+
+const ConnectButton = styled.div`
+    margin: auto;
+`
+
+const SubmitButton = styled.input`
+    margin-top: 10px;
+    height: 35px;
+    background: ${colors.tertiary};
+    border: ${colors.tertiary};
+    border-radius: 30px;
+    color: #FFFF;
+    font-size: 15px;
+    font-weight: bold;
+    &:hover {
+        cursor: pointer;
+    }
+`
+
+const SignupButton = styled(NavLink)`
+    text-decoration: none;
+    color: ${colors.primary};
+    font-weight: bold;
+    &:hover {
+        text-decoration: underline;
+    }
+`
 
 
 const Login = () => {
@@ -13,12 +63,8 @@ const Login = () => {
     const { setIsAdmin } = useContext(userAdminContext)
     const navigate = useNavigate()
 
-    const [passwordShown, setPasswordShown] = useState(false)
     const [credError, setCredError] = useState(false)
 
-    const handleToggle = () => {
-        setPasswordShown(!passwordShown)
-    }
 
     const handleSubmit = (e) => {
         if (credError === true) {
@@ -50,22 +96,23 @@ const Login = () => {
     }, [])
     
     return (
-    <div className='loginContainer'>
-        <h1 className='pageTitle'>CONNEXION</h1>
+    <LoginContainer>
+        <Title className='pageTitle'>CONNEXION</Title>
         <form onSubmit={(e) => handleSubmit(e)}>
             <label htmlFor='email'>Adresse email: </label>
-            <input type='email' className='inputContainer' id='loginEmail' name='email' size='50' required />
+            <input type='email' className='inputContainer' id='loginEmail' name='email' size='30' required />
             <br /><br />
             <label htmlFor='password'>Mot de passe: </label>
-            <input type={passwordShown ? 'text' : 'password'} className='inputContainer' id='loginPassword' name='password' size='50' required/>
-            <span onClick={() => handleToggle()}>{passwordShown ? <FaEyeSlash /> : <FaEye />}</span>
-            <input type="submit" value="Se connecter" />
+            <input type='password' className='inputContainer' id='loginPassword' name='password' size='30' required/>
+            <ConnectButton>
+                <SubmitButton type="submit" value="Se connecter" />
+            </ConnectButton>
         </form>
         <br />
         <br />
         { credError ? <p className="login-error">Mauvais email ou mot de passe</p> : "" }
-        <p>Vous n'avez pas de compte ? <NavLink to="/">S'inscrire ici</NavLink></p>
-    </div>
+        <p>Vous n'avez pas de compte ? <SignupButton to="/">S'inscrire ici</SignupButton></p>
+    </LoginContainer>
     )
 }
 
