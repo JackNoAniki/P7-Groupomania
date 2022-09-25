@@ -1,21 +1,64 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import styled from 'styled-components'
+import colors from '../utils/colors'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { FaEyeSlash, FaEye } from 'react-icons/fa'
 import axios from 'axios'
-import '../styles/Signup.css'
 
+const SignupContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+    max-width: 600px;
+    margin: auto;
+    margin-top: 10px;
+    background: ${colors.secondary};
+    color: ${colors.tertiary};
+    border: 3px solid ${colors.primary};
+    border-radius: 30px;
 
-function Signup () {
+`
+
+const Title = styled.h1`
+    text-align: center;
+    margin-top: 20px;
+`
+
+const SignupButtonContainer = styled.div`
+    margin: auto;
+`
+
+const SignupButton = styled.input`
+    margin-top: 10px;
+    height: 35px;
+    background: ${colors.tertiary};
+    border: ${colors.tertiary};
+    border-radius: 30px;
+    color: #FFFF;
+    font-size: 15px;
+    font-weight: bold;
+    &:hover {
+        cursor: pointer;
+    }
+`
+
+const LoginButton = styled(NavLink)`
+    text-decoration: none;
+    color: ${colors.primary};
+    font-weight: bold;
+    &:hover {
+        text-decoration: underline;
+    }
+`
+
+const Signup = () => {
     
-    const [passwordShown, setPasswordShown] = useState(false)
     const [mailUsed, setMailUsed] = useState(false)
     const [accountCreated, setAccountCreated] = useState(false)
-
-    const handleToggle = () =>  {
-        setPasswordShown(!passwordShown)
-    }
 
     const mySwal = withReactContent(Swal)
 
@@ -42,25 +85,25 @@ function Signup () {
     }
 
     return (
-    <div className='loginContainer'>
-        <h1 className='pageTitle'>INSCRIPTION</h1>
+    <SignupContainer>
+        <Title>INSCRIPTION</Title>
         <div className='fromContainer'>
             <form onSubmit={(e) => handleSubmit(e)}>
                 <label htmlFor='email'>Adresse email: </label>
-                <input type='email' className='inputContainer' id='loginEmail' name='email' size='50' required />
+                <input type='email' className='inputContainer' id='loginEmail' name='email' size='30' required />
                 <br /><br />
                 <label htmlFor='password'>Mot de passe: </label>
-                <input type={passwordShown ? 'text' : 'password'} className='inputContainer' id='loginPassword' name='password' size='50' required />
-                <span onClick={() => handleToggle()}>{passwordShown ? <FaEyeSlash /> : <FaEye />}</span>
-                <input type="submit" value="S'inscrire"></input>
+                <input type='password' className='inputContainer' id='loginPassword' name='password' size='30' required />
+                <SignupButtonContainer>
+                    <SignupButton type="submit" value="S'inscrire"></SignupButton>
+                </SignupButtonContainer>
             </form>
             { mailUsed ? <p className='login-error'>Cet e-mail est dèjà utilisé</p> : "" }
             { accountCreated ? <p>Votre compte a bien été crée ! Rendez-vous sur la page login pour vous connecter</p> : "" }
             <br />
-            <p>Vous avez déjà un compte ?</p>
-            <NavLink to="/login">Connectez-vous !</NavLink>
+            <p>Vous avez déjà un compte ? <LoginButton to="/login">Connectez-vous !</LoginButton></p>
         </div>
-    </div>
+    </SignupContainer>
     )   
 }
 

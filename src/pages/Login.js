@@ -20,7 +20,6 @@ const LoginContainer = styled.div`
     color: ${colors.tertiary};
     border: 3px solid ${colors.primary};
     border-radius: 30px;
-
 `
 
 const Title = styled.h1`
@@ -28,11 +27,11 @@ const Title = styled.h1`
     margin-top: 20px;
 `
 
-const ConnectButton = styled.div`
+const ConnectButtonContainer = styled.div`
     margin: auto;
 `
 
-const SubmitButton = styled.input`
+const LoginButton = styled.input`
     margin-top: 10px;
     height: 35px;
     background: ${colors.tertiary};
@@ -104,9 +103,9 @@ const Login = () => {
             <br /><br />
             <label htmlFor='password'>Mot de passe: </label>
             <input type='password' className='inputContainer' id='loginPassword' name='password' size='30' required/>
-            <ConnectButton>
-                <SubmitButton type="submit" value="Se connecter" />
-            </ConnectButton>
+            <ConnectButtonContainer>
+                <LoginButton type="submit" value="Se connecter" />
+            </ConnectButtonContainer>
         </form>
         <br />
         <br />

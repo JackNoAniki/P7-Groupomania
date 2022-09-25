@@ -1,4 +1,3 @@
-import '../styles/Home.css'
 import { NavLink, useNavigate } from 'react-router-dom'
 import colors from '../utils/colors'
 import styled from 'styled-components'
@@ -6,8 +5,6 @@ import { useEffect, useState, useContext } from 'react'
 import { userContext, userTokenContext, userAdminContext } from '../utils/context/UserContext'
 import Card from '../components/Card'
 import axios from 'axios'
-
-
 
 const StyledLink = styled(NavLink)`
     text-decoration: none;
@@ -17,6 +14,29 @@ const StyledLink = styled(NavLink)`
         color: ${colors.primary}
     }
 `
+
+const NavContainer = styled.nav`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 10px;
+`
+
+const AdminTitle = styled.h1`
+    margin-left: 5px;
+`
+
+const UserTitle = styled.h1`
+    margin-left: 5px;
+`
+
+const HomeConteinerPosts = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+`
+
 
 
 
@@ -60,15 +80,15 @@ const Home = () => {
     }, [currentUser])
 
     return (
-        <div className="homeContainer">
-            <nav className="navContainer">
+        <div className='homeContainer'>
+            <NavContainer>
                 <StyledLink to="#">Tous les posts</StyledLink>
                 <StyledLink to="/myposts">Mes posts</StyledLink>
                 <StyledLink to="/publish">Publier</StyledLink>
                 <StyledLink to="/login" onClick={handleDisconnect}>Déconnexion</StyledLink>
-            </nav>
-            { isAdmin === 'true' ? <h1>Administrateur connecté</h1> : <h1>Utilisateur connecté</h1> }
-            <div className="homeContainer__posts">
+            </NavContainer>
+            { isAdmin === 'true' ? <AdminTitle>Administrateur connecté</AdminTitle> : <UserTitle>Utilisateur connecté</UserTitle> }
+            <HomeConteinerPosts>
                 {data.map((post) =>
                     <Card
                         key={"card_key" + post._id}
@@ -76,7 +96,7 @@ const Home = () => {
                         refresh={getData}
                     />
                 )}
-            </div>
+            </HomeConteinerPosts>
         </div>
     )
 }

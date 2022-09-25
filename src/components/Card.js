@@ -3,8 +3,102 @@ import { useContext, useState, useEffect } from 'react'
 import { FaRegThumbsUp } from 'react-icons/fa'
 import { userContext, userTokenContext, userAdminContext } from '../utils/context/UserContext'
 import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import colors from '../utils/colors'
+
+const CardContiner = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-width: 800px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-bottom: 15px;
+    justify-content: center;
+    border: 3px solid ${colors.primary};
+    border-radius: 30px;
+`
+
+const StyledImgContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+`
+
+const StyledImg = styled.img`
+    height: 500px;
+    min-width: 300px;
+    max-width: 500px;
+    object-fit: cover;
+
+`
+
+const CardAside = styled.aside`
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-width: 800px;
+`
+
+const LikeButton = styled.span`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    &:hover {
+        color: ${colors.primary}
+    }
+`
+
+const PostDate = styled.p`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+`
+
+const HandleButtons = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+`
+
+const ModifyButton = styled.button`
+    margin-top: 10px;
+    height: 35px;
+    background: ${colors.tertiary};
+    border: ${colors.tertiary};
+    border-radius: 30px;
+    color: #FFFF;
+    font-size: 15px;
+    font-weight: bold;
+    &:hover {
+        cursor: pointer;
+        background: ${colors.primary};
+    }
+`
+
+const DeleteButton = styled.button`
+    margin-top: 10px;
+    height: 35px;
+    background: ${colors.tertiary};
+    border: ${colors.tertiary};
+    border-radius: 30px;
+    color: #FFFF;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 5px;
+    &:hover {
+        cursor: pointer;
+        background: ${colors.primary};
+    }
+`
+
+
+
+
 
 const Card = ({ post, refresh }) => {
     const { currentUser } = useContext(userContext)
@@ -85,28 +179,30 @@ const Card = ({ post, refresh }) => {
     }, [])
 
     return (
-        <div className='card'>
+        <CardContiner>
             <article className='card__article'>
                 <section className='card__article__text'>
                     <h2>{post.title}</h2>
                     <p>{post.text}</p>
                 </section>
-                <img src={post.imageUrl} alt='' />
+                <StyledImgContainer>
+                    <StyledImg src={post.imageUrl} alt='' />
+                </StyledImgContainer>
             </article>
-            <aside className='card__aside'>
+            <CardAside>
                 <div className='card__aside--likes'>
-                    <span onClick={handleLike}><FaRegThumbsUp />{" " + liked}</span>
+                    <LikeButton onClick={handleLike}><FaRegThumbsUp />{" " + liked}</LikeButton>
                 </div>
-                <p>Posté le {dateFormater(post.date)} </p>
+                <PostDate>Posté le {dateFormater(post.date)} </PostDate>
                 {post.userId === currentUser  || isAdmin === 'true' ?
-                <div className='userIdButtons'>
-                    <button className='modifyButton' onClick={navToMofidyPost}>Modifier</button>
-                    <button className='deleteButton' onClick={handleDelete} >Supprimer</button>
-                </div>
+                <HandleButtons>
+                    <ModifyButton className='modifyButton' onClick={navToMofidyPost}>Modifier</ModifyButton>
+                    <DeleteButton className='deleteButton' onClick={handleDelete} >Supprimer</DeleteButton>
+                </HandleButtons>
                 :
                 ""}
-            </aside>
-        </div>
+            </CardAside>
+        </CardContiner>
     )
 }
 
