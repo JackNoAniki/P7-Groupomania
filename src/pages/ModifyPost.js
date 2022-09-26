@@ -69,8 +69,10 @@ const StyledImg = styled.img`
     max-height: 500px;
     min-width: 300px;
     max-width: 500px;
-    object-fit: cover;
-
+    object-fit: contain;
+    @media (max-width: 768px) {
+        max-width: 300px;
+    }
 `
 
 const SubmitButton = styled.input`
@@ -182,7 +184,7 @@ const ModifyPost = () => {
                             defaultValue={post.imageUrl}
                             onChange={handlePostImg} />
                 </PostImgLabel>
-                {imgPreview ? <StyledImg src={imgPreview} alt='' /> : <img src={post.imageUrl} alt='' />}
+                {imgPreview ? <StyledImg src={imgPreview} alt='Vérification image pré publication' /> : <img src={post.imageUrl} alt='' />}
                 <SubmitButton className="form__publish--button" type="submit" value="Publier" />
             </StyledForm>
             <CancelButton className="cancel" onClick={() => navigate("/home")} >Annuler</CancelButton>

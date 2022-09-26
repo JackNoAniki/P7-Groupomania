@@ -28,6 +28,7 @@ const AdminTitle = styled.h1`
 `
 
 const UserTitle = styled.h1`
+
     margin-left: 5px;
 `
 
@@ -36,9 +37,6 @@ const HomeConteinerPosts = styled.div`
     justify-content: center;
     flex-wrap: wrap;
 `
-
-
-
 
 const Home = () => {
 

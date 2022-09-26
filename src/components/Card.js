@@ -12,12 +12,13 @@ const CardContiner = styled.div`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-width: 800px;
+    width: 800px;
     padding-left: 10px;
     padding-right: 10px;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
     margin-right: 5px;
     margin-left: 5px;
-    padding-bottom: 15px;
     justify-content: center;
     border: 3px solid ${colors.primary};
     border-radius: 30px;
@@ -33,7 +34,10 @@ const StyledImg = styled.img`
     height: 500px;
     min-width: 300px;
     max-width: 500px;
-    object-fit: cover;
+    object-fit: contain;
+    @media (max-width: 768px) {
+        max-width: 300px;
+    }
 
 `
 
@@ -146,7 +150,7 @@ const Card = ({ post, refresh }) => {
             axios.post(`http://localhost:8000/api/posts/${post._id}/like`, likeData)
             .then((res) => {
             console.log(res)
-            (userLike ? setLiked(post.likes) : setLiked(post.likes +1))
+            (userLike ? setLiked(post.likes--) : setLiked(post.likes++))
             })
             .catch(error => console.log(error))
     }
@@ -186,12 +190,12 @@ const Card = ({ post, refresh }) => {
                     <p>{post.text}</p>
                 </section>
                 <StyledImgContainer>
-                    <StyledImg src={post.imageUrl} alt='' />
+                    <StyledImg src={post.imageUrl} alt='Image du post' />
                 </StyledImgContainer>
             </article>
             <CardAside>
                 <div className='card__aside--likes'>
-                    <LikeButton onClick={handleLike}><FaRegThumbsUp />{" " + liked}</LikeButton>
+                    <LikeButton onClick={handleLike}><FaRegThumbsUp />{post.likes}</LikeButton>
                 </div>
                 <PostDate>Posté le {dateFormater(post.date)} </PostDate>
                 {post.userId === currentUser  || isAdmin === 'true' ?

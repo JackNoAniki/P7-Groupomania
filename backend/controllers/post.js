@@ -3,7 +3,7 @@ const fs = require('fs');
 
 
 exports.getAllPosts = (req, res, next) => {
-    Post.find()
+    Post.find().sort({ date: 'descending' })
         .then((posts) => {
             res.status(200).json(posts)
         })
@@ -35,7 +35,7 @@ exports.createPost = (req, res, next) => {
         ...postObject,
         imageUrl: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : "",
         likes: 0,
-        usersLiked: [' ']
+        usersLiked: [ ]
     });
     post.save()
         .then(() => res.status(201).json({ message: 'Post saved !' }))

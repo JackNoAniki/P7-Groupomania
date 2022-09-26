@@ -70,8 +70,10 @@ const StyledImg = styled.img`
     max-height: 500px;
     min-width: 300px;
     max-width: 500px;
-    object-fit: cover;
-
+    object-fit: contain;
+    @media (max-width: 768px) {
+        max-width: 300px;
+    }
 `
 
 const SubmitButton = styled.input`
@@ -153,7 +155,7 @@ const Publish = () => {
                     Ajouter une image
                     <input type="file" name="imagePost" id="file" accept='image/png, image/jpeg, image/jpg' onChange={handlePostImg} />
                 </PostImgLabel>
-                <StyledImg src={imgPreview} alt='' />
+                <StyledImg src={imgPreview} alt='Vérification image pré publication' />
                 <SubmitButton className="form__publish--button" type="submit" value="Publier" />
             </StyledForm>
         </PublishContainer>
