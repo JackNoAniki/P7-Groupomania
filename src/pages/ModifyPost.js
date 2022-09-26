@@ -152,7 +152,8 @@ const ModifyPost = () => {
         axios.put(`http://localhost:8000/api/posts/${URLparams.id}`, form) 
             .then(() => {
                 mySwal.fire({
-                    title: 'Votre post a bien été modifié !'
+                    title: 'Votre post a bien été modifié !',
+                    confirmButtonColor: `${colors.primary}`
                 })
                 navigate('/home')
             })

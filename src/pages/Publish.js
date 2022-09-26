@@ -126,7 +126,8 @@ const Publish = () => {
         axios.post(`http://localhost:8000/api/posts`, form) 
             .then(() => {
                 mySwal.fire({
-                    title: 'Votre post a bien été publié !'
+                    title: 'Votre post a bien été publié !',
+                    confirmButtonColor: `${colors.primary}`
                 })
                 navigate('/home')
             })

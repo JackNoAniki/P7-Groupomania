@@ -161,26 +161,33 @@ const Card = ({ post, refresh }) => {
             showDenyButton: true,
             showCancelButton: false,
             confirmButtonText: "Supprimer",
-            denyButtonText: "Ne pas supprimer",
+            confirmButtonColor: `${colors.primary}`,
+            denyButtonText: "Annuler",
+            denyButtonColor: `${colors.tertiary}`
         })
             .then((result) => {
                 result.isConfirmed ?
                     axios.delete(`http://localhost:8000/api/posts/` + post._id)
                         .then(() => {
-                            mySwal.fire("Publication supprimée")
+                            mySwal.fire({
+                                title: "Publication supprimée",
+                                confirmButtonColor: `${colors.primary}`
+                            })
                             refresh()
                         })
                         .catch(error => {
                             console.log(error)
                         })
                 :
-                    mySwal.fire("Publication non supprimée")
+                    mySwal.fire({
+                        title: "Publication non supprimée",
+                        confirmButtonColor: `${colors.primary}`,
+                    })
             })
     }
 
     useEffect(() => {
-
-    }, [])
+    },[])
 
     return (
         <CardContiner>
