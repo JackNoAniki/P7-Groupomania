@@ -109,10 +109,11 @@ const Card = ({ post, refresh }) => {
     const { userToken } = useContext(userTokenContext)
     axios.defaults.headers.common['Authorization'] = userToken
     const { isAdmin } = useContext(userAdminContext)
+    const [currentPost, setCurrentPost] = useState(post)
 
     const navigate = useNavigate()
     const navToMofidyPost = () => {
-        let modifyPost = "/modifypost/" + post._id
+        let modifyPost = "/modifypost/" + currentPost._id
         navigate(modifyPost)
     }
 
@@ -129,13 +130,13 @@ const Card = ({ post, refresh }) => {
         return newDate
     }
 
-    const like = post.usersLiked
-    const [userLike, setUserLike] = useState(like.includes(currentUser))
-    const [liked, setLiked] = useState(post.likes)
+    const likes = currentPost.usersLiked
+    const [userLike, setUserLike] = useState(likes.includes(currentUser))
+    const [liked, setLiked] = useState(currentPost.likes)
 
     const handleLike = () => {
 
-        setUserLike(!userLike)
+        console.log(userLike)
         let likeData
         (userLike ? 
             likeData = {
@@ -147,10 +148,14 @@ const Card = ({ post, refresh }) => {
             }
         )
 
-            axios.post(`http://localhost:8000/api/posts/${post._id}/like`, likeData)
+            axios.post(`http://localhost:8000/api/posts/${currentPost._id}/like`, likeData)
             .then((res) => {
-            console.log(res)
-            (userLike ? setLiked(post.likes--) : setLiked(post.likes++))
+            console.log(res.data.post)
+            const newPost = res.data.post
+            setCurrentPost(newPost)
+            setUserLike(newPost.usersLiked.includes(currentUser))
+            setLiked(newPost.likes)
+            console.log(newPost.likes)
             })
             .catch(error => console.log(error))
     }
@@ -202,7 +207,7 @@ const Card = ({ post, refresh }) => {
             </article>
             <CardAside>
                 <div className='card__aside--likes'>
-                    <LikeButton onClick={handleLike}><FaRegThumbsUp />{post.likes}</LikeButton>
+                    <LikeButton onClick={handleLike}><FaRegThumbsUp />{liked}</LikeButton>
                 </div>
                 <PostDate>Posté le {dateFormater(post.date)} </PostDate>
                 {post.userId === currentUser  || isAdmin === 'true' ?

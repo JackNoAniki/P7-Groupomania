@@ -69,24 +69,33 @@ exports.deletePost = (req, res) => {
 exports.likePost = (req, res, next) => {
     switch (req.body.like) {
         case 1 :
-            Post.updateOne({ _id: req.params.id },
-            { $inc: { likes: +1 }, $push: { usersLiked: req.auth.userId }})
-                .then(() => res.status(200).json({ message: "I like" }))
-                .catch(error => res.status(400).json({ error }));
+            Post.findOneAndUpdate({ _id: req.params.id },
+            { $inc: { likes: +1 }, $push: { usersLiked: req.auth.userId }}, {new: true}, function(error, document) {
+                console.log(error);
+                console.log(document);
+                if(!error) {
+                    res.status(200).json({post: document, message: "I like"})
+                }
+                else {
+                    res.status(400).json({ error })
+                }
+            })
+
             break;
 
         case 0 : 
-            Post.findOne({ _id: req.params.id })
-                .then((post) => {
-                    if (post.usersLiked.includes(req.auth.userId)) {
-                        Post.updateOne({ _id: req.params.id }, 
-                        { $inc: { likes: -1 }, $pull: { usersLiked: req.auth.userId }})
-                            .then(() => res.status(200).json({ message: "Neutral" }))
-                            .catch(error => res.status(400).json({ error }));
-                    };
+            Post.findOneAndUpdate({ _id: req.params.id },
+                { $inc: { likes: -1 }, $pull: { usersLiked: req.auth.userId }}, {new: true}, function(error, document) {
+                    console.log(error);
+                    console.log(document);
+                    if(!error) {
+                        res.status(200).json({post: document, message: "Neutral"})
+                    }
+                    else {
+                        res.status(400).json({ error })
+                    }
                 })
-                .catch(error => res.status(404).json({ error }));
-            break;
+        break;
 
         default:
             res.status(404).end();
