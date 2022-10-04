@@ -156,7 +156,7 @@ const Publish = () => {
                     Ajouter une image
                     <input type="file" name="imagePost" id="file" accept='image/png, image/jpeg, image/jpg' onChange={handlePostImg} />
                 </PostImgLabel>
-                <StyledImg src={imgPreview} alt='Vérification image pré publication' />
+                {imgPreview && <StyledImg src={imgPreview} alt='Vérification image pré publication' /> } 
                 <SubmitButton className="form__publish--button" type="submit" value="Publier" />
             </StyledForm>
         </PublishContainer>

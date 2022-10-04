@@ -17,11 +17,15 @@ const CardContiner = styled.div`
     padding-right: 10px;
     padding-bottom: 15px;
     margin-bottom: 10px;
-    margin-right: 5px;
-    margin-left: 5px;
+    margin-right: 80px;
+    margin-left: 80px;
     justify-content: center;
     border: 3px solid ${colors.primary};
     border-radius: 30px;
+    @media (max-width: 992px) {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
 `
 
 const StyledImgContainer = styled.div`
@@ -31,7 +35,7 @@ const StyledImgContainer = styled.div`
 `
 
 const StyledImg = styled.img`
-    height: 500px;
+    height: 300px;
     min-width: 300px;
     max-width: 500px;
     object-fit: contain;
