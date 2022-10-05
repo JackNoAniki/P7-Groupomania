@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import colors from '../utils/colors'
 import Swal from 'sweetalert2'
@@ -62,6 +62,8 @@ const Signup = () => {
 
     const mySwal = withReactContent(Swal)
 
+    const navigate = useNavigate()
+
     const handleSubmit = (e) => {
         if(mailUsed === true) {
             setMailUsed(!mailUsed)
@@ -75,8 +77,10 @@ const Signup = () => {
                 setAccountCreated(true)
                 mySwal.fire({
                     title: <strong>Votre compte a bien été crée !</strong>,
-                    html: <a href='/login'>Connectez-vous</a>
-                })
+                    text: 'Cliquez sur OK pour vous connecter',
+                    htmlColor: `${colors.primary}`,
+                    confirmButtonColor: `${colors.primary}`,
+                }).then(() => navigate("/login"))
             })
             .catch((error) => {
                 console.log(error)
