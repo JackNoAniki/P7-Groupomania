@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import axios from 'axios'
 import { userAdminContext, userContext, userTokenContext } from '../utils/context/UserContext'
 import colors from '../utils/colors'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 
 const LoginContainer = styled.div`
@@ -64,6 +66,8 @@ const Login = () => {
 
     const [credError, setCredError] = useState(false)
 
+    const mySwal = withReactContent(Swal)
+
 
     const handleSubmit = (e) => {
         if (credError === true) {
@@ -84,8 +88,12 @@ const Login = () => {
                 localStorage.setItem("isAdmin", `${res.data.isAdmin}`)
                 navigate("/home")
             })
-            .catch(error => {
-                console.log(error)
+            .catch(() => {
+                mySwal.fire({
+                    title: <strong>Erreur lors de la conexion au compte</strong>,
+                    html: `L'adresse e-mail ou le mot de passe est incorrect`,
+                    confirmButtonColor: `${colors.primary}`,
+                })
                 setCredError(true)
             })
     }

@@ -71,8 +71,6 @@ exports.likePost = (req, res, next) => {
         case 1 :
             Post.findOneAndUpdate({ _id: req.params.id },
             { $inc: { likes: +1 }, $push: { usersLiked: req.auth.userId }}, {new: true}, function(error, document) {
-                console.log(error);
-                console.log(document);
                 if(!error) {
                     res.status(200).json({post: document, message: "I like"})
                 }
@@ -86,8 +84,6 @@ exports.likePost = (req, res, next) => {
         case 0 : 
             Post.findOneAndUpdate({ _id: req.params.id },
                 { $inc: { likes: -1 }, $pull: { usersLiked: req.auth.userId }}, {new: true}, function(error, document) {
-                    console.log(error);
-                    console.log(document);
                     if(!error) {
                         res.status(200).json({post: document, message: "Neutral"})
                     }

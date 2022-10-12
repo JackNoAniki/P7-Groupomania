@@ -3,6 +3,9 @@ import { useState, useContext, useEffect } from "react"
 import { Link, useNavigate } from 'react-router-dom'
 import Card from '../components/Card'
 import { userContext, userTokenContext } from "../utils/context/UserContext"
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import colors from '../utils/colors'
 
 const MyPosts = () => {
     const { currentUser, setCurrentUser } = useContext(userContext)
@@ -13,6 +16,8 @@ const MyPosts = () => {
 
     const navigate = useNavigate()
 
+    const mySwal = withReactContent(Swal)
+
     const getMyData = () => {
         if(!currentUser) {
             setCurrentUser(localStorage.userConnected)
@@ -22,8 +27,12 @@ const MyPosts = () => {
             .then(res => {
                 setMyData(res.data)
             })
-            .catch(error => {
-                console.log(error)
+            .catch(() => {
+                mySwal.fire({
+                    title: <strong>Erreur lors de l'affichage de vos posts</strong>,
+                    text: 'Veuillez réessayer',
+                    confirmButtonColor: `${colors.primary}`,
+                })
             })
     }
 

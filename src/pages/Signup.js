@@ -80,10 +80,18 @@ const Signup = () => {
                     text: 'Cliquez sur OK pour vous connecter',
                     htmlColor: `${colors.primary}`,
                     confirmButtonColor: `${colors.primary}`,
-                }).then(() => navigate("/login"))
+                })
+            .then(() => navigate("/login"))
             })
-            .catch((error) => {
-                console.log(error)
+            .catch(() => {
+                mySwal.fire({
+                    title: <strong>Erreur lors de la création du compte</strong>,
+                    html: `Plusieurs raisons peuvent expliquer l'erreur : <br /><br />` +
+                    `<b>-</b> L'adresse e-mail est déjà utilisée<br/><br />` + 
+                    `<b>-</b> Le mot de passe n'est pas assez fort. Il doit comporter au minimum
+                    5 caractères avec au moins un chiffre, une majuscule et une minusucule.`,
+                    confirmButtonColor: `${colors.primary}`,
+                })
                 setMailUsed(true)
             })
     }

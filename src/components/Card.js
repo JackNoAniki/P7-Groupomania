@@ -140,7 +140,6 @@ const Card = ({ post, refresh }) => {
 
     const handleLike = () => {
 
-        console.log(userLike)
         let likeData
         (userLike ? 
             likeData = {
@@ -154,14 +153,18 @@ const Card = ({ post, refresh }) => {
 
             axios.post(`http://localhost:8000/api/posts/${currentPost._id}/like`, likeData)
             .then((res) => {
-            console.log(res.data.post)
             const newPost = res.data.post
             setCurrentPost(newPost)
             setUserLike(newPost.usersLiked.includes(currentUser))
             setLiked(newPost.likes)
-            console.log(newPost.likes)
             })
-            .catch(error => console.log(error))
+            .catch(() => {
+                mySwal.fire({
+                    title: <strong>Erreur lors du like du post</strong>,
+                    text: 'Veuillez réessayer',
+                    confirmButtonColor: `${colors.primary}`,
+                })
+            })
     }
 
     const handleDelete = () => {
@@ -184,8 +187,12 @@ const Card = ({ post, refresh }) => {
                             })
                             refresh()
                         })
-                        .catch(error => {
-                            console.log(error)
+                        .catch(() =>{
+                            mySwal.fire({
+                                title: <strong>Erreur lors de la suppression du post</strong>,
+                                text: 'Veuillez réessayer',
+                                confirmButtonColor: `${colors.primary}`,
+                            })
                         })
                 :
                     mySwal.fire({

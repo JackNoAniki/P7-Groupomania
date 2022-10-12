@@ -131,7 +131,13 @@ const Publish = () => {
                 })
                 navigate('/home')
             })
-            .catch(error => { console.log(error) })
+            .catch(() => {
+                mySwal.fire({
+                    title: <strong>Erreur lors de la publication du post</strong>,
+                    text: 'Veuillez réessayer',
+                    confirmButtonColor: `${colors.primary}`,
+                })
+            })
     }
 
     useEffect(() => {

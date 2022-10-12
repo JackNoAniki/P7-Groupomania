@@ -5,6 +5,9 @@ import { useEffect, useState, useContext } from 'react'
 import { userContext, userTokenContext, userAdminContext } from '../utils/context/UserContext'
 import Card from '../components/Card'
 import axios from 'axios'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 
 const StyledLink = styled(NavLink)`
     text-decoration: none;
@@ -45,6 +48,9 @@ const Home = () => {
     const { isAdmin, setIsAdmin } = useContext(userAdminContext)
     axios.defaults.headers.common['Authorization'] = userToken
 
+    const mySwal = withReactContent(Swal)
+
+
     const [data, setData] = useState([])
     const navigate = useNavigate()
 
@@ -59,8 +65,12 @@ const Home = () => {
             .then(res => {
                 setData(res.data)
             })
-            .catch(error => {
-                console.log(error)
+            .catch(() => {
+                mySwal.fire({
+                    title: <strong>Erreur lors du chargement de la page</strong>,
+                    text: 'Veuillez réessayer',
+                    confirmButtonColor: `${colors.primary}`,
+                })
             })
     }
 
