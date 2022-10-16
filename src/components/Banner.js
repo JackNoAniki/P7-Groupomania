@@ -1,11 +1,24 @@
-import '../styles/Banner.css'
+import  styled from 'styled-components'
 import logo from '../assets/logo-groupomania-orange.png'
 
-function Banner() {
+const GpmnBanner = styled.div`
+    color: black;
+    border-bottom: solid 3px  #4E5166;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+`
+
+const GpmnLogo = styled.img`
+    width: 30%;
+`
+
+
+const Banner = () => {
     return (
-        <div className="gpmn-banner">
-            <img src={logo} alt='logo-groupomania' className='gpmn-logo' />
-        </div>
+        <GpmnBanner>
+            <GpmnLogo src={logo} alt='logo-groupomania' className='gpmn-logo' />
+        </GpmnBanner>
         
     )
 }
