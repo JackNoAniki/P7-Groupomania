@@ -84,7 +84,6 @@ const Home = () => {
             navigate("/login")
         }
         getData()
-        console.log(isAdmin)
     }, [currentUser])
 
     return (

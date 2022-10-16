@@ -146,7 +146,7 @@ const ModifyPost = () => {
         const form = new FormData()
         form.append("title",  title ? title : post.title)
         form.append("text", text ? text :  text.text)
-        form.append("imagePost", imgPostFile)
+        form.append("imagePost", imgPostFile, imgPostFile.name)
         form.append("date", today)
 
         axios.put(`http://localhost:8000/api/posts/${URLparams.id}`, form) 
@@ -182,11 +182,11 @@ const ModifyPost = () => {
                     Nouvelle publication
                     <textarea name="text" defaultValue={post.text} onChange={(e) => setText(e.target.value)} rows={5} required  />
                 </PostBody>
-                <PostImgLabel htmlFor="image">
+                <PostImgLabel htmlFor="file">
                     Ajouer une image
                     <input type="file" 
                             name="imagePost" 
-                            id="imagePost" 
+                            id="file" 
                             accept="image/png, image/jpeg, image/jpg"
                             defaultValue={post.imageUrl}
                             onChange={handlePostImg} />
