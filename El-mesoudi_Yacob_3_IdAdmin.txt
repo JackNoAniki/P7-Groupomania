@@ -1,2 +1,0 @@
-Identifiant: jon@snow.com
-Mot de passe: Test123
