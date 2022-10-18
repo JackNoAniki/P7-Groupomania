@@ -1,0 +1,17 @@
+[{
+  "_id": {
+    "$oid": "634c6fe31b0b4fcb15c63241"
+  },
+  "email": "jon@snow.com",
+  "password": "$2b$10$dvi58Q60Zf0zfb3aqwU05OBHOMpEAFLjz81dD5QwcWgn.zLUG.n7S",
+  "isAdmin": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "634c7e721d2d332a469e4541"
+  },
+  "email": "user@user.com",
+  "password": "$2b$10$pW4DLP.8aU5xxy///LDpjOGbW8WOhXNheOvU/8lXrdnad/FgN5TyG",
+  "isAdmin": false,
+  "__v": 0
+}]

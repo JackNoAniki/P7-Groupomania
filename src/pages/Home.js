@@ -76,7 +76,6 @@ const Home = () => {
 
     const handleDisconnect = () => {
         localStorage.clear()
-        console.log("local storage cleared !")
     }
 
     useEffect(() => {

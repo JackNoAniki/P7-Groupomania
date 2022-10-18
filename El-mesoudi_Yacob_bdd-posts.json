@@ -1,0 +1,57 @@
+[{
+  "_id": {
+    "$oid": "634c75e21b0b4fcb15c6325d"
+  },
+  "userId": "634c6fe31b0b4fcb15c63241",
+  "title": "LREM IPSUM 2",
+  "text": "Publication test 2",
+  "imageUrl": "http://localhost:8000/images/programming-g91c854000_640.jpg1665955298017.jpg",
+  "likes": 2,
+  "date": {
+    "$date": {
+      "$numberLong": "1665955297996"
+    }
+  },
+  "usersLiked": [
+    "634c6fe31b0b4fcb15c63241",
+    "634c7e721d2d332a469e4541"
+  ],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "634c75f91b0b4fcb15c63262"
+  },
+  "userId": "634c6fe31b0b4fcb15c63241",
+  "title": "LOREM IPSUM3",
+  "text": "Publication test 3",
+  "imageUrl": "http://localhost:8000/images/river-g5b0e2bfe4_640.jpg1665955321628.jpg",
+  "likes": 2,
+  "date": {
+    "$date": {
+      "$numberLong": "1665955321615"
+    }
+  },
+  "usersLiked": [
+    "634c6fe31b0b4fcb15c63241",
+    "634c7e721d2d332a469e4541"
+  ],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "634c7e8b1d2d332a469e454a"
+  },
+  "userId": "634c7e721d2d332a469e4541",
+  "title": "LOREM IPSUM 4",
+  "text": "Publication test 4",
+  "imageUrl": "http://localhost:8000/images/boats-g36126ff1c_640.jpg1665958279398.jpg",
+  "likes": 1,
+  "date": {
+    "$date": {
+      "$numberLong": "1665957515788"
+    }
+  },
+  "usersLiked": [
+    "634c7e721d2d332a469e4541"
+  ],
+  "__v": 0
+}]
